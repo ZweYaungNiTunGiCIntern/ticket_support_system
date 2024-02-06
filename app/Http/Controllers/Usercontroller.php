@@ -14,7 +14,7 @@ class Usercontroller extends Controller
     public function create()
     {
 
-        return view('User.create');
+        return view('user.create');
     }
 
     public function store(Request $request)
@@ -38,17 +38,17 @@ class Usercontroller extends Controller
 
     public function edit(User $user)
     {
-        return view('User.edit', compact('user'));
+        return view('user.edit', compact('user'));
     }
     public function show(User $user){
-        return view('User.detail',compact('user'));
+        return view('user.detail',compact('user'));
     }
 
     public function update(Request $request, User $user)
     {
         $validatedData = $request->validate([
             'name'=>'required',
-            'email' => 'required|unique:users,email,',
+            'email' => 'required',
             'role' => 'required',
             'password'=>'required',
         ]);
@@ -60,7 +60,7 @@ class Usercontroller extends Controller
             $role = $request->input('role');
         }
 
-        $user = new User;
+        
         $user->name = $request->name;
         $user->email = $request->email;
         $user->role = $role;
@@ -73,6 +73,6 @@ class Usercontroller extends Controller
     public function destroy(User $user)
     {
         $user->delete();
-        return redirect()->route('user.index')->with('success', 'User deleted successfully');
+        return redirect()->route('user.index')->with('danger', 'User deleted successfully');
     }
 }

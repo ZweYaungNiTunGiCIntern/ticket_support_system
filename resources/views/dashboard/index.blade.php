@@ -55,7 +55,7 @@
                                 </p>
                             </a>
                         </li>
-                       
+
                         <li class="nav-item">
                             <a href="{{ route('user.index') }}" class="nav-link">
                                 <i class="fa fa-list"></i>
@@ -66,6 +66,30 @@
                             <a href="{{ route('user.create') }}" class="nav-link">
                                 <i class="fa fa-plus"></i>
                                 <p>Create User</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('category.index') }}" class="nav-link">
+                                <i class="fa fa-list"></i>
+                                <p>Category List</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('category.create') }}" class="nav-link">
+                                <i class="fa fa-plus"></i>
+                                <p>Create Category</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('label.index') }}" class="nav-link">
+                                <i class="fa fa-list"></i>
+                                <p>Label List</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('label.create') }}" class="nav-link">
+                                <i class="fa fa-plus"></i>
+                                <p>Create Label</p>
                             </a>
                         </li>
 
