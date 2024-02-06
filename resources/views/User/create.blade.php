@@ -20,8 +20,8 @@
                         </div>
                         <div class="mb-3">
                             <label  class="form-label">Email<small class="text-danger"></small></label>
-                            <input type="email" name="email" class="form-control @error('name')is-invalid @enderror " value="{{ old('duration') }}">
-                                @error('price')
+                            <input type="email" name="email" class="form-control @error('email')is-invalid @enderror " value="{{ old('duration') }}">
+                                @error('email')
                                     <div class="text-danger">{{ $message }}</div>
 
                                 @enderror
@@ -38,7 +38,7 @@
                         </div>
                         <div class="mb-3">
                             <label  class="form-label">Password<small class="text-danger"></small></label>
-                            <input type="number" name="password" class="form-control @error('expire date')is-invalid @enderror " >
+                            <input type="text" name="password" class="form-control @error('expire date')is-invalid @enderror " >
                                 @error('name')
                                     <div class="text-danger">{{ $message }}</div>
 

@@ -42,6 +42,8 @@
 
                                     @if ($user->role == 1)
                                         Agent
+                                    @elseif ($user->role==0)
+                                        Admin
                                     @elseif ($user->role == 2)
                                         User
                                     @endif

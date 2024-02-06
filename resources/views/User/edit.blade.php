@@ -33,7 +33,6 @@
                                 <label for="role" class="form-label">Role <small
                                         class="text-danger">*</small></label>
                                 <select id="role" name="role" class="form-control" placeholder="Enter role" value="{{ old('email', $user->role) }}">
-                                    <option value="0">Admin</option>
                                     <option value="1">Agent</option>
                                     <option value="2">User</option>
                                 </select>
@@ -45,11 +44,15 @@
                                 <label for="password" class="form-label">Password <small
                                         class="text-danger">*</small></label>
                                 <input type="text" class="form-control @error('password') is-invalid @enderror"
-                                    id="password" name="password" value="{{ old('password', $user->password) }}"
+                                    id="password" name="password"   value = "{{ decrypt($user->password ) }}"
                                     placeholder="Enter password">
                                 @error('password')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
+                            </div>
+                            <div class="mb-3">
+                                <label for="role" class="form-label">Make Admin</label>
+                                <input type="checkbox" value="0" id="is_admin" name="is_admin" />
                             </div>
 
 

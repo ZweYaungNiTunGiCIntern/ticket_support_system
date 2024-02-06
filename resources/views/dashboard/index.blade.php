@@ -55,6 +55,19 @@
                                 </p>
                             </a>
                         </li>
+                       
+                        <li class="nav-item">
+                            <a href="{{ route('user.index') }}" class="nav-link">
+                                <i class="fa fa-list"></i>
+                                <p>User List</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('user.create') }}" class="nav-link">
+                                <i class="fa fa-plus"></i>
+                                <p>Create User</p>
+                            </a>
+                        </li>
 
                     </ul>
                 </nav>
