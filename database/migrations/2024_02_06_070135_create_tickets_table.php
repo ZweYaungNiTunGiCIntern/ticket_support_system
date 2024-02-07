@@ -17,9 +17,6 @@ class CreateTicketsTable extends Migration
             $table->id();
             $table->string('title');
             $table->longText('message');
-            $table->foreignId('category_id');
-            $table->foreignId('label_id');
-            //$table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('priority');
             $table->longText('image');
             $table->timestamps();

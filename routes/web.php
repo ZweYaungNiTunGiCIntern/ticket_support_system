@@ -28,3 +28,4 @@ Route::resource('/user', App\Http\Controllers\Usercontroller::class);
 Route::resource('/category', App\Http\Controllers\CategoryController::class);
 Route::resource('/label', App\Http\Controllers\LabelController::class);
 Route::resource('/ticket', App\Http\Controllers\TicketController::class);
+Route::resource('/comment', App\Http\Controllers\CommentController::class);

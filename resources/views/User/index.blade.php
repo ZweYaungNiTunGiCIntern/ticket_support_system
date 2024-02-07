@@ -59,10 +59,8 @@
                                             <div>
                                                 <form action="{{route('user.destroy',$user->id) }}" method="post" class="d-inline-block" onsubmit="return confirm('Are you sure to delete this item');" >
                                                     @method('delete')
-
                                                     @csrf
                                                     <button class="btn btn-outline-danger">
-
                                                         <i class="fa fa-trash"></i>
                                                     </button>
                                                 </form>

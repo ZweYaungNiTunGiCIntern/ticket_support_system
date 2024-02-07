@@ -41,6 +41,16 @@ class TicketController extends Controller
      */
     public function store(StoreTicketRequest $request)
     {
+
+        $request->validate([
+            'title' => 'required',
+            'message' => 'required',
+            'priority' => 'required',
+            'image' => 'required',
+            // At least one category must be selected
+     // Ensure all selected categories exist
+            // Add validation rules for other fields if needed
+        ]);
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $newName = "gallery_" . uniqid() . "." . $image->extension();
@@ -53,15 +63,21 @@ class TicketController extends Controller
         $ticket = new ticket();
         $ticket->title= $request->title;
         $ticket->message= $request->message;
-        $ticket->category_id=$request->category_id;
-
-        $ticket->label_id=$request->label_id;
         $ticket->priority = $request->priority;
         $ticket->image = $newName;
-        $ticket->categories()->attach($request->category_ids);
+        //$ticket->categories()->attach($request->category_ids);
         $ticket->save();
+       // $ticket->category_id=$request->category_id;
+        if ($request->has('category_id')){
+            $ticket->categories()->attach($request->category_id);
+        }
 
-        //return redirect()->route('ticket.index')->with('success', 'New ticket successfully added.');;
+
+       // $ticket->label_id=$request->label_id;
+        if ($request->has('label_id')) {
+            $ticket->labels()->attach($request->label_id);
+        }
+        return redirect()->route('ticket.index')->with('success', 'New ticket successfully added.');
     }
 
     /**
@@ -72,7 +88,7 @@ class TicketController extends Controller
      */
     public function show(Ticket $ticket)
     {
-        //
+            return view('ticket.detail',compact('ticket'));
     }
 
     /**
@@ -83,7 +99,9 @@ class TicketController extends Controller
      */
     public function edit(Ticket $ticket)
     {
-        //
+        $categories = Category::all();
+        $labels = Label::all();
+        return view('ticket.edit',compact('ticket','categories','labels'));
     }
 
     /**
@@ -95,7 +113,44 @@ class TicketController extends Controller
      */
     public function update(UpdateTicketRequest $request, Ticket $ticket)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'message' => 'required',
+            'priority' => 'required',
+            'image' => 'required',
+            // At least one category must be selected
+     // Ensure all selected categories exist
+            // Add validation rules for other fields if needed
+        ]);
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $newName = "gallery_" . uniqid() . "." . $image->extension();
+            $image->storeAs("public/gallery", $newName);
+        } else {
+            $newName = null; // If no file was uploaded
+        }
+
+
+
+        $ticket->title= $request->title;
+        $ticket->message= $request->message;
+        $ticket->priority = $request->priority;
+        $ticket->image = $newName;
+        //$ticket->categories()->attach($request->category_ids);
+        $ticket->save();
+       // $ticket->category_id=$request->category_id;
+        if ($request->has('category_id')){
+            $ticket->categories()->attach($request->category_id);
+        }
+
+
+       // $ticket->label_id=$request->label_id;
+        if ($request->has('label_id')) {
+            $ticket->labels()->attach($request->label_id);
+        }
+
+        return redirect()->route('ticket.index')->with('success','Updated successfully');
+
     }
 
     /**
@@ -106,6 +161,7 @@ class TicketController extends Controller
      */
     public function destroy(Ticket $ticket)
     {
-        //
+        $ticket->delete();
+        return redirect()->route('ticket.index')->with('danger', 'Ticket deleted successfully');
     }
 }

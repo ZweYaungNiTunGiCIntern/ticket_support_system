@@ -28,36 +28,30 @@
                                 <th scope="col">ID</th>
                                 <th scope="col">Title</th>
                                 <th scope="col">Message</th>
-                                <th scope="col">Category</th>
+                                <th scope="col">File</th>
+                                <th scope="col">Action</th>
 
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($users as $user)
+                            @foreach($tickets as $ticket)
                                 <tr>
                                     <th scope="row"> {{ $loop->index + 1 }}</th>
-                                    <td>{{ $user->name }}</td>
-                                    <td>{{ $user->email }}</td>
+                                    <td>{{ $ticket->title }}</td>
+                                    <td>{{ $ticket->message }}</td>
                                     <td>
-
-                                    @if ($user->role == 1)
-                                        Agent
-                                    @elseif ($user->role==0)
-                                        Admin
-                                    @elseif ($user->role == 2)
-                                        User
-                                    @endif
+                                        <img src="{{ asset('storage/gallery/'. $ticket->image) }}" alt="{{ $ticket->name }}" style="max-width: 50px; max-height: 50px;" >
                                     </td>
                                     <td>
                                         <div class="d-flex justify-content-right">
-                                            <a href="{{route('user.edit',$user->id) }}" class="btn btn-outline-warning"">
+                                            <a href="{{route('ticket.edit',$ticket->id) }}" class="btn btn-outline-warning"">
                                                 <i class="fa fa-edit"></i>
                                             </a>
-                                            <a href="{{route('user.show',$user->id) }}" class="btn btn-outline-primary">
+                                            <a href="{{route('ticket.show',$ticket->id) }}" class="btn btn-outline-primary">
                                                 <i class="fa fa-info"></i>
                                             </a>
                                             <div>
-                                                <form action="{{route('user.destroy',$user->id) }}" method="post" class="d-inline-block" onsubmit="return confirm('Are you sure to delete this item');" >
+                                                <form action="{{route('ticket.destroy',$ticket->id) }}" method="post" class="d-inline-block" onsubmit="return confirm('Are you sure to delete this item');" >
                                                     @method('delete')
 
                                                     @csrf
