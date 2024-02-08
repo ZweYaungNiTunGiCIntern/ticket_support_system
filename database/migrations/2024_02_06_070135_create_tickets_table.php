@@ -19,6 +19,8 @@ class CreateTicketsTable extends Migration
             $table->longText('message');
             $table->string('priority');
             $table->longText('image');
+            $table->foreignId('user_id');
+            $table->foreignId('agent_id')->nullable();
             $table->timestamps();
         });
     }

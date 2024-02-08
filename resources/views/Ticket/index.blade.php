@@ -2,10 +2,12 @@
 
 @section('category')
 <div class="container">
-
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card mt-5 md-4 shadow">
+                <div class="card-header">
+                    <h3>Ticket List</h3>
+                </div>
                 <div class="card-body">
                     @if(session()->get('success'))
                         <div class="alert alert-success">

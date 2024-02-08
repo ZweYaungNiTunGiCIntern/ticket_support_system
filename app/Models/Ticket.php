@@ -21,4 +21,11 @@ class Ticket extends Model
     {
         return $this->hasMany(Comment::class);
     }
+    public function agent(){
+        return $this->belongsTo(User::class,'agent_id','id');
+    }
+    public function createdByUser($userId)
+    {
+        return $this->user_id === $userId;
+    }
 }

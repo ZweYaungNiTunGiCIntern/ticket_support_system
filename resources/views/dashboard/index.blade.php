@@ -46,25 +46,17 @@
                         data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-                        <li class="nav-item">
-                            <a href="pages/widgets.html" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
-                                <p>
-                                    Widgets
-                                    <span class="right badge badge-danger">New</span>
-                                </p>
-                            </a>
-                        </li>
+                        
 
                         <li class="nav-item">
                             <a href="{{ route('user.index') }}" class="nav-link">
-                                <i class="fa fa-list"></i>
+                                <i class="fas fa-user-friends"></i>
                                 <p>User List</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('user.create') }}" class="nav-link">
-                                <i class="fa fa-plus"></i>
+                                <i class="fa fa-user-check"></i>
                                 <p>Create User</p>
                             </a>
                         </li>
@@ -82,14 +74,26 @@
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('label.index') }}" class="nav-link">
-                                <i class="fa fa-list"></i>
+                                <i class="fas fa-sliders-h"></i>
                                 <p>Label List</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('label.create') }}" class="nav-link">
-                                <i class="fa fa-plus"></i>
+                                <i class="fas fa-tools"></i>
                                 <p>Create Label</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('ticket.index') }}" class="nav-link">
+                                <i class="fas fa-ticket"></i>
+                                <p>Ticket List</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('ticket.create') }}" class="nav-link">
+                                <i class="fa fa-ticket"></i>
+                                <p>Create ticket</p>
                             </a>
                         </li>
 

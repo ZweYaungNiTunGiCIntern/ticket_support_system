@@ -5,17 +5,17 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
+                <div class="class-header">
+                    <h3>Create Label</h3>
+                </div>
                 <div class="card-body align-items-center m-4">
                     <form action="{{ route('label.store') }}" method="post">
                         @csrf
-
-
                         <div class="mb-3">
                             <label  class="form-label">Name <small class="text-danger"></small></label>
                             <input type="text" name="name" class="form-control @error('name')is-invalid @enderror " value="{{ old('duration') }}">
                                 @error('name')
                                     <div class="text-danger">{{ $message }}</div>
-
                                 @enderror
                         </div>
                         <div class="mb-4">

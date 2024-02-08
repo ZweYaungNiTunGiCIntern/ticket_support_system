@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Ticket;
 use App\Models\Label;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 use App\Http\Requests\StoreTicketRequest;
 use App\Http\Requests\UpdateTicketRequest;
@@ -16,9 +18,20 @@ class TicketController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        $tickets=Ticket::all();
-        return view('ticket.index',compact('tickets'));
+    { if (Auth::user()->role == 0) {
+        $tickets = Ticket::all();
+        return view('ticket.index', compact('tickets'));
+    }
+    elseif(Auth::user()->role == 1) {
+        $tickets = Ticket::where('agent_id', Auth::user()->id)
+            ->orWhere('agent_id', Auth::user()->id)
+            ->all();
+        return view('ticket.index', compact('tickets'));
+    }
+    $tickets = Ticket::where('user_id', Auth::user()->id)->get();
+    return view('ticket.index', compact('tickets'));
+
+
     }
 
     /**
@@ -61,6 +74,8 @@ class TicketController extends Controller
 
 
         $ticket = new ticket();
+        $ticket->user_id = auth()->id();
+        $ticket->agent_id= $request->agent_id;
         $ticket->title= $request->title;
         $ticket->message= $request->message;
         $ticket->priority = $request->priority;
@@ -101,7 +116,8 @@ class TicketController extends Controller
     {
         $categories = Category::all();
         $labels = Label::all();
-        return view('ticket.edit',compact('ticket','categories','labels'));
+        $users = User::where('role','1')->get();
+        return view('ticket.edit',compact('ticket','categories','labels','users'));
     }
 
     /**
@@ -117,33 +133,34 @@ class TicketController extends Controller
             'title' => 'required',
             'message' => 'required',
             'priority' => 'required',
-            'image' => 'required',
+
             // At least one category must be selected
      // Ensure all selected categories exist
             // Add validation rules for other fields if needed
         ]);
+
+        $oldImage = $ticket->image;
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $newName = "gallery_" . uniqid() . "." . $image->extension();
             $image->storeAs("public/gallery", $newName);
         } else {
-            $newName = null; // If no file was uploaded
+            $newName = $oldImage; // If no file was uploaded
         }
-
-
-
         $ticket->title= $request->title;
+        $ticket->agent_id = $request->agent_id;
         $ticket->message= $request->message;
         $ticket->priority = $request->priority;
         $ticket->image = $newName;
         //$ticket->categories()->attach($request->category_ids);
         $ticket->save();
+        if ($request->hasFile('image') && $oldImage) {
+            Storage::delete("public/gallery/{$oldImage}");
+        }
        // $ticket->category_id=$request->category_id;
         if ($request->has('category_id')){
             $ticket->categories()->attach($request->category_id);
         }
-
-
        // $ticket->label_id=$request->label_id;
         if ($request->has('label_id')) {
             $ticket->labels()->attach($request->label_id);
@@ -161,7 +178,16 @@ class TicketController extends Controller
      */
     public function destroy(Ticket $ticket)
     {
-        $ticket->delete();
-        return redirect()->route('ticket.index')->with('danger', 'Ticket deleted successfully');
+        $comment = Comment::findOrFail($commentId);
+        $ticket = $comment->ticket;
+
+        // Check if the authenticated user is the creator of the ticket
+        if ($ticket->createdByUser(Auth::id())) {
+            // Delete the comment
+            $comment->delete();
+            return redirect()->back()->with('success', 'Comment deleted successfully.');
+        } else {
+            return redirect()->back()->with('error', 'You are not authorized to delete this comment.');
+        }
     }
 }

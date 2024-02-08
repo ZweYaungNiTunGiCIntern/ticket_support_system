@@ -44,6 +44,21 @@
                         <!-- Label -->
                         <div class="row mb-3">
                             <div class="col-md-4">
+                                <div class="fw-bold fs-4">Agent </div>
+                            </div>
+                            <div class="col-md-1">:</div>
+                            <div class="col-md-7">
+                                @if($ticket->agent_id)
+                                {{ $ticket->agent->name }}
+                            @else
+                                No assigned agent
+                            @endif
+
+
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4">
                                 <div class="fw-bold fs-4">Label</div>
                             </div>
                             <div class="col-md-1">:</div>
@@ -53,6 +68,14 @@
                                 @endforeach
                             </div>
                         </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <div class="fw-bold fs-4">File Path</div>
+                            </div>
+                            <div class="col-md-1">:</div>
+                            <div class="col-md-7"><img src="{{ asset('storage/gallery/'. $ticket->image) }}" alt="{{ $ticket->name }}" style="max-width: 50px; max-height: 50px;"></div>
+                        </div>
+
 
                         <!-- Comments section -->
                         <div class="card mt-4">
@@ -89,25 +112,28 @@
             </div>
 
             <!-- Comment form -->
-            <div class="col-md-4">
+            <div class="col-md-6 mx-auto">
                 <div class="card">
-                    <div class="card-body align-items-center m-4">
+                    <div class="card-header">
+                    <h5 class="card-title">Add a Comment</h5></div>
+                    <div class="card-body">
+
                         <form action="{{ route('comment.store') }}" method="post" enctype="multipart/form-data">
                             @csrf
-
-                            <div class="">
-                                <input type="hidden" name="ticket_id" value="{{ $ticket->id }}" />
-                                <input type="hidden" name="user_id" value="{{ auth()->id() }}" />
-                                <input type="text" name="comment_text" />
+                            <input type="hidden" name="ticket_id" value="{{ $ticket->id }}" />
+                            <input type="hidden" name="user_id" value="{{ auth()->id() }}" />
+                            <div class="form-group">
+                                <label for="comment_text">Comment:</label>
+                                <textarea class="form-control" id="comment_text" name="comment_text" rows="3" placeholder="Enter your comment"></textarea>
                             </div>
-
-                            <div class="mt-3 align-item-center">
+                            <div class="text-center">
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 @endsection

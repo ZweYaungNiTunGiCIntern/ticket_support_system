@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use App\Http\Controllers\Auth;
 use App\Models\Comment;
+use App\Models\Ticket;
+
 use App\Http\Requests\StoreCommentRequest;
 use App\Http\Requests\UpdateCommentRequest;
 
@@ -36,7 +38,7 @@ class CommentController extends Controller
      */
     public function store(StoreCommentRequest $request)
     {
-        
+
         $comment = new Comment;
         $comment->comment_text = $request->comment_text;
         $comment->user_id = $request->user_id;
@@ -76,7 +78,11 @@ class CommentController extends Controller
      */
     public function update(UpdateCommentRequest $request, Comment $comment)
     {
-        //
+        $comment->comment_text = $request->comment_text;
+        $comment->user_id = $request->user_id;
+        $comment->ticket_id = $request->ticket_id;
+        $comment->save();
+        return redirect()->back();
     }
 
     /**
@@ -85,5 +91,16 @@ class CommentController extends Controller
      * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
+    public function destroy($id)
+{
+    {
+        $comment = Comment::findOrFail($id);
+        if($comment){
+            $comment->delete();
+
+        }
+        return redirect()->back()->with('delete','You have deleted one category');
+    }
+}
 
 }
